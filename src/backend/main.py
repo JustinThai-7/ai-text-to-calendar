@@ -2,9 +2,10 @@ from fastapi import FastAPI, File, UploadFile, Form
 import shutil
 from pathlib import Path
 from fastapi.middleware.cors import CORSMiddleware
-from typing import Optional
+from typing import Optional, List
 # from backend.event_generation.nlp_parsers.openai_parser import OpenAiParser
 from event_generation.nlp_parsers.gemini_parser import GeminiParser
+from ics import Calendar
 
 
 app = FastAPI()
@@ -66,3 +67,15 @@ async def convert(
         event.set_ical_string()
         print(event)
     return event_list
+
+def merge_event_ical(events: List[str]):
+    # Create new calendar to serve as full event list
+    merged_calendar = Calendar()
+
+    for event in events:
+        cal = Calendar(event["ics"])
+        
+    for event in cal.events:
+        merged_calendar.events.add(event)
+
+    return str(merged_calendar)
