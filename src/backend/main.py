@@ -73,9 +73,9 @@ def merge_event_ical(events: List[str]):
     merged_calendar = Calendar()
 
     for event in events:
-        cal = Calendar(event["ics"])
-        
-    for event in cal.events:
-        merged_calendar.events.add(event)
+        # Temp var to collect ics strings per event
+        cal = Calendar(event["ics"])    
+        for event in cal.events:
+            merged_calendar.events.add(event)
 
     return str(merged_calendar)
